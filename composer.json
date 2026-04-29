@@ -1,0 +1,23 @@
+{
+    "name": "mend-detection-qa/composer-branch-alias-probe",
+    "description": "Minimal Composer probe: branch-alias version mapping detection test.",
+    "type": "project",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Seldaek/monolog"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "monolog/monolog": "dev-main"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {}
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

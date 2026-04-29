@@ -1,0 +1,66 @@
+{
+    "schema_version": "1.0",
+    "pm": "composer",
+    "lockfile": "composer.lock",
+    "pattern": "branch-alias",
+    "notes": "monolog/monolog is required at dev-main and resolved from the VCS repository. Its own composer.json declares a branch-alias mapping dev-main -> 3.x-dev in extra.branch-alias. Composer records the package at version 'dev-main' in the lockfile (the raw branch version), not the alias. The alias mapping is stored inside the package entry under extra.branch-alias, NOT in the top-level aliases[] array (that array is reserved for inline root-level aliases such as 'dev-main as 3.x-dev'). Mend should detect monolog/monolog at version dev-main with source type git. psr/log is a transitive pulled from Packagist.",
+    "packages": [
+        {
+            "name": "monolog/monolog",
+            "version": "dev-main",
+            "scope": "require",
+            "source": "git",
+            "source_detail": {
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "68b974809baff3f071893de61447212e9e688ee7",
+                "branch_alias": {
+                    "dev-main": "3.x-dev",
+                    "alias_normalized": "3.9999999.9999999.9999999-dev"
+                }
+            },
+            "direct": true,
+            "children": [
+                {
+                    "name": "psr/log",
+                    "version": "3.0.2",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": []
+                }
+            ]
+        }
+    ],
+    "total_packages": 2,
+    "direct_count": 1,
+    "transitive_count": 1,
+    "unique_packages": [
+        "monolog/monolog:dev-main",
+        "psr/log:3.0.2"
+    ],
+    "mend_detection_expectations": {
+        "monolog/monolog": {
+            "version_in_lockfile": "dev-main",
+            "alias_in_lockfile": "3.x-dev",
+            "alias_location": "packages[].extra.branch-alias (NOT top-level aliases[])",
+            "source_must_be": "git",
+            "source_url": "https://github.com/Seldaek/monolog.git",
+            "resolved_reference": "68b974809baff3f071893de61447212e9e688ee7",
+            "asserted_version": "dev-main",
+            "version_choice_rationale": "The lockfile records version as 'dev-main'. The alias '3.x-dev' is metadata in extra.branch-alias. Mend may report either; the probe asserts dev-main as the canonical lockfile version. If Mend reports 3.x-dev, that is an alias-resolution behavior to document, not necessarily a defect.",
+            "must_not_report_as": "registry"
+        },
+        "psr/log": {
+            "version": "3.0.2",
+            "source_must_be": "registry",
+            "note": "psr/log is a stable release from Packagist, not covered by the VCS repository declaration."
+        },
+        "failure_modes_exercised": [
+            "alias ignored: Mend reports the raw branch name dev-main instead of recognizing the 3.x-dev alias",
+            "package not found: dev-main version unrecognized because Mend does not process dev- versions from VCS sources",
+            "duplicate entries: one entry for dev-main and one for 3.x-dev appearing as separate packages",
+            "source misclassification: monolog/monolog reported as registry instead of git",
+            "version swapped: Mend uses alias 3.x-dev as the reported version when lockfile says dev-main"
+        ]
+    }
+}
